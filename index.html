@@ -1,79 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Linktree</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>Yann Amangoua — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-   
 </head>
-
 <body>
-    <div class="background">
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
-    
-    <section>
-        <div>
-            <img class="profile-pic" src="IMG_5510.jpg" alt="Profile Picture">
-            <h2 class="title is-4">Yann Amangoua</h2>
-            <h3 class="title is-5">Computer science student</h3>
-            <div class="link-items">
-                <a href="https://theyannemmenuel.github.io/theyannemmenuel-morpion.github.io/">
-                    <i class="fa-solid fa-chess-king"></i>
-                    <p>Game</p>
-                </a>
-                <a href="https://www.linkedin.com/in/yann-amangoua-8b6604200/">
-                    <i class="fa-brands fa-linkedin"></i>
-                    <p>LinkedIn</p>
-                </a>
-                <a rel="nooponer" data-link="tel:+330640675598" href="tel:+330640675598">
-                    <i class="fa-solid fa-phone"></i>
-                    <p>Contact</p>
-                </a>
-                <a href="https://github.com/Theyannemmenuel?tab=repositories">
-                    <i class="fa-brands fa-github"></i>
-                    <p>GitHub</p>
-                </a>
-                <a rel="noopener" data-link="mailto:yannamangoua31@gmail.com" href="mailto:yannamangoua31@gmail.com">
-                    <i class="fa-solid fa-envelope"></i>
-                    <p>Gmail</p>
-                </a>
-                <a href="https://theyannemmenuel.github.io/bulma/">
-                    <i class="fa-solid fa-link"></i>
-                    <p>Landing page</p>
-                </a>
 
-                <a href="https://theyannemmenuel.github.io/design.io/">
-                    <i class="fa-solid fa-pencil"></i>  
-                    <p>Design</p>
-                </a>
-            </div>
+    <canvas id="matrix"></canvas>
+
+    <main class="card">
+        <img class="profile-pic" src="IMG_5510.jpg" alt="Yann Amangoua">
+        <h1>Yann Amangoua<span class="cursor">_</span></h1>
+        <p class="role">Computer science student</p>
+
+        <div class="links">
+            <a href="https://theyannemmenuel.github.io/theyannemmenuel-morpion.github.io/">
+                <span><i class="fa-solid fa-chess-king"></i>Morpion</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/yann-amangoua-8b6604200/">
+                <span><i class="fa-brands fa-linkedin"></i>LinkedIn</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="tel:+330640675598">
+                <span><i class="fa-solid fa-phone"></i>Contact</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://github.com/Theyannemmenuel?tab=repositories">
+                <span><i class="fa-brands fa-github"></i>GitHub</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="mailto:yannamangoua31@gmail.com">
+                <span><i class="fa-solid fa-envelope"></i>Gmail</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="sites.html">
+                <span><i class="fa-solid fa-globe"></i>Mes sites web</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://theyannemmenuel.github.io/design.io/">
+                <span><i class="fa-solid fa-pencil"></i>Design</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
         </div>
 
-        <h3 class="title is-6">let's collaborate !</h3>
-        
-    </section>
+        <p class="collab">let's collaborate</p>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const SIZE = 14;
+        let cols, drops, speeds;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            cols = Math.floor(canvas.width / SIZE);
+            drops = Array.from({ length: cols }, () => Math.random() * -(canvas.height / SIZE) * 2);
+            speeds = Array.from({ length: cols }, () => Math.random() * 0.35 + 0.15);
+        }
+
+        let last = 0;
+        function draw(ts) {
+            requestAnimationFrame(draw);
+            if (ts - last < 40) return;
+            last = ts;
+
+            ctx.fillStyle = 'rgba(0,0,0,0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${SIZE}px monospace`;
+
+            for (let i = 0; i < cols; i++) {
+                const y = drops[i] * SIZE;
+                const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+                const brightness = Math.random() * 0.25 + 0.65;
+                ctx.fillStyle = `rgba(255,255,255,${brightness})`;
+                ctx.fillText(ch, i * SIZE, y);
+
+                if (y > canvas.height && Math.random() > 0.98) drops[i] = 0;
+                drops[i] += speeds[i];
+            }
+        }
+
+        init();
+        requestAnimationFrame(draw);
+        window.addEventListener('resize', init);
+    </script>
+
 </body>
 </html>

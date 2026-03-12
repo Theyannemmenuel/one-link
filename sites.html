@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yann Amangoua — Sites web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-y: auto;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            opacity: 0.6;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .site-card {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 270px;
+            text-decoration: none;
+            display: block;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .site-card:hover {
+            border-color: rgba(255, 255, 255, 0.28);
+            transform: translateY(-4px);
+        }
+
+        .site-card img {
+            width: 100%;
+            height: 165px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            filter: grayscale(30%) brightness(0.9);
+            transition: filter 0.25s;
+        }
+
+        .site-card:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .card-body {
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .site-name {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.02em;
+        }
+
+        .site-url {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.28);
+            margin-top: 3px;
+        }
+
+        .arrow {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75rem;
+        }
+
+        .back-link {
+            margin-top: 2.5rem;
+            color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="content">
+        <h1>Mes sites web</h1>
+
+        <div class="cards-container">
+
+            <a class="site-card" href="https://www.vevitv.fr" target="_blank" rel="noopener">
+                <img src="vevitv.png" alt="Vevitv">
+                <div class="card-body">
+                    <div>
+                        <div class="site-name">Vevitv</div>
+                        <div class="site-url">vevitv.fr</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                </div>
+            </a>
+
+            <a class="site-card" href="https://maxtraining.fr" target="_blank" rel="noopener">
+                <img src="maxtraining.png" alt="Max Training">
+                <div class="card-body">
+                    <div>
+                        <div class="site-name">Max Training</div>
+                        <div class="site-url">maxtraining.fr</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                </div>
+            </a>
+
+            <a class="site-card" href="https://les-amis-de-paul-axel.netlify.app" target="_blank" rel="noopener">
+                <img src="amis-de-paul-axel.png" alt="Les Amis de Paul Axel">
+                <div class="card-body">
+                    <div>
+                        <div class="site-name">Les Amis de Paul Axel</div>
+                        <div class="site-url">les-amis-de-paul-axel.netlify.app</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                </div>
+            </a>
+
+        </div>
+
+        <a class="back-link" href="index.html">
+            <i class="fa-solid fa-arrow-left"></i> Retour
+        </a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const SIZE = 14;
+        let cols, drops, speeds;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            cols = Math.floor(canvas.width / SIZE);
+            drops = Array.from({ length: cols }, () => Math.random() * -(canvas.height / SIZE) * 2);
+            speeds = Array.from({ length: cols }, () => Math.random() * 0.35 + 0.15);
+        }
+
+        let last = 0;
+        function draw(ts) {
+            requestAnimationFrame(draw);
+            if (ts - last < 40) return;
+            last = ts;
+
+            ctx.fillStyle = 'rgba(0,0,0,0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${SIZE}px monospace`;
+
+            for (let i = 0; i < cols; i++) {
+                const y = drops[i] * SIZE;
+                const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+                ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25 + 0.65})`;
+                ctx.fillText(ch, i * SIZE, y);
+                if (y > canvas.height && Math.random() > 0.98) drops[i] = 0;
+                drops[i] += speeds[i];
+            }
+        }
+
+        init();
+        requestAnimationFrame(draw);
+        window.addEventListener('resize', init);
+    </script>
+
+</body>
+</html>

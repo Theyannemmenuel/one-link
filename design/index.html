@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yann Amangoua — Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="page">
+
+        <!-- Hero -->
+        <header class="hero">
+            <p class="hero-label">UI / UX Design · Figma</p>
+            <h1>Je conçois des interfaces<br>pensées pour l'utilisateur.</h1>
+            <p class="hero-sub">Propres, modernes, fonctionnelles — du wireframe au prototype finalisé.</p>
+        </header>
+
+        <!-- Projects -->
+        <section class="projects">
+
+            <div class="project-card">
+                <div class="card-img-wrap">
+                    <img src="innert.png" alt="Innert Creative">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>UI Design</span>
+                        <span>Web</span>
+                        <span>Branding</span>
+                    </div>
+                    <h2>Innert Creative</h2>
+                    <p class="desc">Landing page pour une agence créative. Identité visuelle forte, hiérarchie typographique impactante et appel à l'action optimisé.</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-img-wrap">
+                    <img src="Mood.png" alt="MOOD App">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>UI Design</span>
+                        <span>Mobile</span>
+                        <span>UX</span>
+                    </div>
+                    <h2>MOOD App</h2>
+                    <p class="desc">Application mobile de suivi d'humeur. Parcours utilisateur fluide, interface colorée et composants accessibles pensés pour un usage quotidien.</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-img-wrap">
+                    <img src="nicolas.png" alt="Refonte de site">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>Refonte</span>
+                        <span>Web</span>
+                        <span>UI Design</span>
+                    </div>
+                    <h2>Refonte de site</h2>
+                    <p class="desc">Refonte complète d'un site existant. Modernisation de l'interface, restructuration du contenu et amélioration globale de l'expérience utilisateur.</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-img-wrap">
+                    <img src="eudes.png" alt="Page d'authentification">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>UI Design</span>
+                        <span>Web</span>
+                    </div>
+                    <h2>Page d'authentification</h2>
+                    <p class="desc">Interface de connexion et d'inscription. Simplicité, clarté et fluidité au service de la conversion et de la confiance utilisateur.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Tools -->
+        <section class="tools-section">
+            <p class="tools-label">Outils maîtrisés</p>
+            <div class="tools-list">
+                <div class="tool">
+                    <i class="fa-brands fa-figma"></i>
+                    <span>Figma</span>
+                </div>
+                <div class="tool">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>Illustrator</span>
+                </div>
+<div class="tool">
+                    <i class="fa-brands fa-html5"></i>
+                    <span>HTML / CSS</span>
+                </div>
+                <div class="tool">
+                    <i class="fa-brands fa-js"></i>
+                    <span>JavaScript</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back -->
+        <a class="back-link" href="https://www.yann-folio.fr/">
+            <i class="fa-solid fa-arrow-left"></i> Retour au portfolio
+        </a>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const SIZE = 14;
+        let cols, drops, speeds;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.body.scrollHeight;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            cols = Math.floor(canvas.width / SIZE);
+            drops = Array.from({ length: cols }, () => Math.random() * -(canvas.height / SIZE) * 2);
+            speeds = Array.from({ length: cols }, () => Math.random() * 0.35 + 0.15);
+        }
+
+        let last = 0;
+        function draw(ts) {
+            requestAnimationFrame(draw);
+            if (ts - last < 40) return;
+            last = ts;
+            ctx.fillStyle = 'rgba(0,0,0,0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${SIZE}px monospace`;
+            for (let i = 0; i < cols; i++) {
+                const y = drops[i] * SIZE;
+                const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+                ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25 + 0.65})`;
+                ctx.fillText(ch, i * SIZE, y);
+                if (y > canvas.height && Math.random() > 0.98) drops[i] = 0;
+                drops[i] += speeds[i];
+            }
+        }
+
+        init();
+        requestAnimationFrame(draw);
+        window.addEventListener('resize', init);
+    </script>
+
+</body>
+</html>

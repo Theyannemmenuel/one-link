@@ -12,120 +12,178 @@
 
         body {
             background: #000;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 2rem;
             font-family: 'JetBrains Mono', monospace;
-            overflow-y: auto;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         canvas {
             position: fixed;
             top: 0; left: 0;
             z-index: 0;
+            pointer-events: none;
         }
 
-        .content {
+        .page {
             position: relative;
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
         }
 
-        h1 {
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 400;
+        /* Hero */
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        .hero-label {
+            font-size: 0.7rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 2.5rem;
-            opacity: 0.6;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.2rem;
         }
 
-        .cards-container {
-            display: flex;
+        .hero h1 {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.25;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-sub {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.7;
+            max-width: 480px;
+            font-weight: 300;
+        }
+
+        /* Grid */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.2rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            margin-bottom: 4rem;
         }
 
-        .site-card {
-            background: rgba(0, 0, 0, 0.65);
+        .project-card {
+            background: rgba(0,0,0,0.65);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.09);
             border-radius: 10px;
             overflow: hidden;
-            width: 270px;
             text-decoration: none;
             display: block;
             transition: border-color 0.2s, transform 0.2s;
         }
 
-        .site-card:hover {
-            border-color: rgba(255, 255, 255, 0.28);
-            transform: translateY(-4px);
+        .project-card:hover {
+            border-color: rgba(255,255,255,0.22);
+            transform: translateY(-3px);
         }
 
-        .site-card img {
+        .card-img-wrap {
             width: 100%;
-            height: 165px;
+            height: 190px;
+            overflow: hidden;
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             object-position: top;
             display: block;
-            filter: grayscale(30%) brightness(0.9);
-            transition: filter 0.25s;
+            filter: grayscale(20%) brightness(0.9);
+            transition: filter 0.25s, transform 0.3s;
         }
 
-        .site-card:hover img {
+        .project-card:hover .card-img-wrap img {
             filter: grayscale(0%) brightness(1);
+            transform: scale(1.02);
         }
 
-        .card-body {
-            padding: 0.8rem 1rem;
+        .card-content {
+            padding: 1rem 1.1rem 1.2rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .tags span {
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 3px;
+            padding: 0.2rem 0.5rem;
+        }
+
+        .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            margin-bottom: 0.5rem;
         }
 
-        .site-name {
+        .card-header h2 {
+            font-size: 0.9rem;
             font-weight: 600;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 0.02em;
+            color: #fff;
+            letter-spacing: 0.01em;
+        }
+
+        .card-header i {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
         }
 
         .site-url {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.28);
-            margin-top: 3px;
+            font-size: 0.62rem;
+            color: rgba(255,255,255,0.22);
+            margin-bottom: 0.6rem;
         }
 
-        .arrow {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.75rem;
+        .desc {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.38);
+            line-height: 1.7;
+            font-weight: 300;
         }
 
+        /* Back */
         .back-link {
-            margin-top: 2.5rem;
-            color: rgba(255, 255, 255, 0.2);
-            text-decoration: none;
-            font-size: 0.7rem;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            color: rgba(255,255,255,0.2);
+            text-decoration: none;
+            font-size: 0.7rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             transition: color 0.2s;
         }
 
         .back-link:hover {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 640px) {
+            .page { padding: 3rem 1.2rem 3rem; }
+            .projects { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -133,49 +191,81 @@
 
     <canvas id="matrix"></canvas>
 
-    <div class="content">
-        <h1>Mes sites web</h1>
+    <div class="page">
 
-        <div class="cards-container">
+        <header class="hero">
+            <p class="hero-label">Développement Web</p>
+            <h1>Des sites conçus et<br>développés de A à Z.</h1>
+            <p class="hero-sub">Du code from scratch aux refontes complètes — chaque projet pensé pour répondre à un besoin réel.</p>
+        </header>
 
-            <a class="site-card" href="https://www.vevitv.fr" target="_blank" rel="noopener">
-                <img src="vevitv.png" alt="Vevitv">
-                <div class="card-body">
-                    <div>
-                        <div class="site-name">Vevitv</div>
-                        <div class="site-url">vevitv.fr</div>
+        <section class="projects">
+
+            <a class="project-card" href="https://www.vevitv.fr" target="_blank" rel="noopener">
+                <div class="card-img-wrap">
+                    <img src="vevitv.png" alt="Vevitv">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>E-commerce</span>
+                        <span>HTML</span>
+                        <span>Bulma</span>
+                        <span>JS</span>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                    <div class="card-header">
+                        <h2>Vevitv</h2>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                    <div class="site-url">vevitv.fr</div>
+                    <p class="desc">Site e-commerce développé from scratch pour une boutique en ligne de crampons. Conception complète de l'interface et de l'expérience d'achat.</p>
                 </div>
             </a>
 
-            <a class="site-card" href="https://maxtraining.fr" target="_blank" rel="noopener">
-                <img src="maxtraining.png" alt="Max Training">
-                <div class="card-body">
-                    <div>
-                        <div class="site-name">Max Training</div>
-                        <div class="site-url">maxtraining.fr</div>
+            <a class="project-card" href="https://maxtraining.fr" target="_blank" rel="noopener">
+                <div class="card-img-wrap">
+                    <img src="maxtraining.png" alt="Max Training">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>Refonte</span>
+                        <span>WordPress</span>
+                        <span>Elementor</span>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                    <div class="card-header">
+                        <h2>Max Training</h2>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                    <div class="site-url">maxtraining.fr</div>
+                    <p class="desc">Refonte totale du site de l'entreprise réalisée en stage. Modernisation de l'identité visuelle, restructuration du contenu et optimisation de l'UX.</p>
                 </div>
             </a>
 
-            <a class="site-card" href="https://les-amis-de-paul-axel.netlify.app" target="_blank" rel="noopener">
-                <img src="amis-de-paul-axel.png" alt="Les Amis de Paul Axel">
-                <div class="card-body">
-                    <div>
-                        <div class="site-name">Les Amis de Paul Axel</div>
-                        <div class="site-url">les-amis-de-paul-axel.netlify.app</div>
+            <a class="project-card" href="https://les-amis-de-paul-axel.netlify.app" target="_blank" rel="noopener">
+                <div class="card-img-wrap">
+                    <img src="amis-de-paul-axel.png" alt="Les Amis de Paul Axel">
+                </div>
+                <div class="card-content">
+                    <div class="tags">
+                        <span>Refonte</span>
+                        <span>HTML</span>
+                        <span>Bulma</span>
+                        <span>JS</span>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                    <div class="card-header">
+                        <h2>Les Amis de Paul Axel</h2>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                    <div class="site-url">les-amis-de-paul-axel.netlify.app</div>
+                    <p class="desc">Refonte complète du site d'une association. Nouveau design from scratch, structure claire et navigation repensée pour mieux servir les membres.</p>
                 </div>
             </a>
 
-        </div>
+        </section>
 
         <a class="back-link" href="index.html">
             <i class="fa-solid fa-arrow-left"></i> Retour
         </a>
+
     </div>
 
     <script>
@@ -187,7 +277,7 @@
 
         function init() {
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.height = document.body.scrollHeight;
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             cols = Math.floor(canvas.width / SIZE);
@@ -200,11 +290,9 @@
             requestAnimationFrame(draw);
             if (ts - last < 40) return;
             last = ts;
-
             ctx.fillStyle = 'rgba(0,0,0,0.06)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.font = `${SIZE}px monospace`;
-
             for (let i = 0; i < cols; i++) {
                 const y = drops[i] * SIZE;
                 const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
